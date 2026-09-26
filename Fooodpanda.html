@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foodpanda Clone | 100% HTML & CSS</title>
+  
+  <!-- Tailwind CSS CDN for atomic utility styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            panda: {
+              DEFAULT: '#d70f64',
+              dark: '#b80c54',
+              soft: '#fdf2f6',
+              light: '#fce7f3'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- External Stylesheet with pure CSS routing engine -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased min-h-screen flex flex-col">
+
+  <!-- =======================================================================
+       STATE ENGINES: Pure CSS Navigation Checkbox/Radio Controls (Hidden)
+       ======================================================================= -->
+  <input type="radio" name="page-route" id="page-1" class="hidden" checked>
+  <input type="radio" name="page-route" id="page-2" class="hidden">
+  <input type="radio" name="page-route" id="page-3" class="hidden">
+  <input type="radio" name="page-route" id="page-4" class="hidden">
+  <input type="radio" name="page-route" id="page-5" class="hidden">
+
+  <!-- Modal State Controllers -->
+  <input type="checkbox" id="cart-toggle" class="hidden">
+  <input type="checkbox" id="dish-modal-toggle" class="hidden">
+
+  <!-- =======================================================================
+       STICKY GLOBAL TOPBAR
+       ======================================================================= -->
+  <header class="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      
+      <!-- Brand Logo (Routes back to Layer 1: Home) -->
+      <div class="flex items-center gap-6">
+        <label for="page-1" class="cursor-pointer flex items-center gap-2 select-none group">
+          <div class="w-10 h-10 rounded-full bg-panda flex items-center justify-center text-white text-xl font-black shadow-md group-hover:scale-105 transition">
+            🐼
+          </div>
+          <span class="text-2xl font-black tracking-tight text-panda">foodpanda</span>
+        </label>
+
+        <!-- Current Location Indicator -->
+        <div class="hidden md:flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full text-xs font-medium text-gray-700">
+          <svg class="w-4 h-4 text-panda" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+          </svg>
+          <span>Islamabad, F-7 Sector</span>
+        </div>
+      </div>
+
+      <!-- Navigation Pill Links -->
+      <nav class="hidden lg:flex items-center space-x-1 text-sm font-semibold">
+        <label for="page-1" class="nav-link-1 cursor-pointer px-4 py-2 rounded-lg hover:text-panda transition">Home</label>
+        <label for="page-2" class="nav-link-2 cursor-pointer px-4 py-2 rounded-lg hover:text-panda transition">Pandamart</label>
+        <label for="page-3" class="nav-link-3 cursor-pointer px-4 py-2 rounded-lg hover:text-panda transition">Restaurants</label>
+        <label for="page-4" class="nav-link-4 cursor-pointer px-4 py-2 rounded-lg hover:text-panda transition">Deals & Vouchers</label>
+      </nav>
+
+      <!-- Cart Button & Profile Action -->
+      <div class="flex items-center gap-3">
+        <label for="cart-toggle" class="cursor-pointer relative p-2.5 rounded-full bg-panda-soft text-panda hover:bg-panda hover:text-white transition flex items-center gap-2 px-4 shadow-sm">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <span class="text-xs font-bold uppercase tracking-wider hidden sm:inline">Bag (2)</span>
+          <span class="w-5 h-5 rounded-full bg-panda text-white text-xs font-black flex items-center justify-center sm:hidden">2</span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <!-- =======================================================================
+       MAIN WRAPPER FOR ALL 5 PAGES ACROSS 3 LAYERS
+       ======================================================================= -->
+  <main class="flex-grow">
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         LAYER 1 (DISCOVERY): PAGE 1 - HOME PAGE
+         +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <section id="page-view-1" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+      
+      <!-- Layer Badge -->
+      <div class="inline-flex items-center gap-2 bg-pink-100 text-panda px-3 py-1 rounded-full text-xs font-bold">
+        <span>LAYER 1 (ENTRY HUB)</span> • <span>PAGE 1: HOME DISCOVERY</span>
+      </div>
+
+      <!-- Hero Banner -->
+      <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-panda to-pink-700 text-white p-8 md:p-14 shadow-xl">
+        <div class="max-w-2xl space-y-4">
+          <h1 class="text-4xl md:text-5xl font-black leading-tight">It's the food and groceries you love, delivered</h1>
+          <p class="text-pink-100 text-lg">Pick your preferred destination and step into Layer 2 to choose your meal or daily essentials.</p>
+          
+          <div class="flex flex-wrap gap-4 pt-4">
+            <!-- Jump to Layer 2: Restaurants -->
+            <label for="page-3" class="cursor-pointer bg-white text-panda px-6 py-3.5 rounded-xl font-bold hover:bg-pink-50 transition shadow-lg inline-flex items-center gap-2">
+              <span>Explore Restaurants (Layer 2)</span>
+              <span>&rarr;</span>
+            </label>
+            <!-- Jump to Layer 1: Pandamart -->
+            <label for="page-2" class="cursor-pointer bg-black/20 backdrop-blur-md text-white border border-white/30 px-6 py-3.5 rounded-xl font-bold hover:bg-black/30 transition inline-flex items-center gap-2">
+              <span>Open Pandamart (Page 2)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Discovery Hub Tiles -->
+      <div>
+        <h2 class="text-2xl font-black text-gray-900 mb-6">Choose a service to continue</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Card to Layer 2: Restaurants -->
+          <label for="page-3" class="cursor-pointer group bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-panda transition flex flex-col justify-between h-56">
+            <div>
+              <div class="text-4xl mb-3">🍔</div>
+              <h3 class="text-xl font-bold text-gray-900 group-hover:text-panda">Food Delivery</h3>
+              <p class="text-sm text-gray-500 mt-1">Browse menus from top local burgers, pizzas, and biryani spots.</p>
+            </div>
+            <div class="text-panda font-bold text-sm inline-flex items-center gap-1 group-hover:underline">
+              <span>Go to Restaurant Listings (Layer 2)</span> &rarr;
+            </div>
+          </label>
+
+          <!-- Card to Layer 1: Pandamart -->
+          <label for="page-2" class="cursor-pointer group bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-panda transition flex flex-col justify-between h-56">
+            <div>
+              <div class="text-4xl mb-3">⚡</div>
+              <h3 class="text-xl font-bold text-gray-900 group-hover:text-panda">Pandamart</h3>
+              <p class="text-sm text-gray-500 mt-1">Groceries, snacks, fresh fruit and milk delivered in under 15 minutes.</p>
+            </div>
+            <div class="text-panda font-bold text-sm inline-flex items-center gap-1 group-hover:underline">
+              <span>Switch to Pandamart (Page 2)</span> &rarr;
+            </div>
+          </label>
+
+          <!-- Card to Layer 2: Mega Deals -->
+          <label for="page-4" class="cursor-pointer group bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-panda transition flex flex-col justify-between h-56">
+            <div>
+              <div class="text-4xl mb-3">🏷️</div>
+              <h3 class="text-xl font-bold text-gray-900 group-hover:text-panda">Deals & Vouchers</h3>
+              <p class="text-sm text-gray-500 mt-1">Discounts up to 50% off and free delivery coupons.</p>
+            </div>
+            <div class="text-panda font-bold text-sm inline-flex items-center gap-1 group-hover:underline">
+              <span>Claim Deals (Layer 2)</span> &rarr;
+            </div>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         LAYER 1 (DISCOVERY): PAGE 2 - PANDAMART GROCERY HUB
+         +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <section id="page-view-2" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+      
+      <!-- Layer Badge & Back Route -->
+      <div class="flex items-center justify-between">
+        <div class="inline-flex items-center gap-2 bg-pink-100 text-panda px-3 py-1 rounded-full text-xs font-bold">
+          <span>LAYER 1 (ENTRY HUB)</span> • <span>PAGE 2: PANDAMART 15-MIN GROCERIES</span>
+        </div>
+        <label for="page-1" class="cursor-pointer text-sm font-semibold text-gray-600 hover:text-panda">
+          &larr; Back to Main Home (Page 1)
+        </label>
+      </div>
+
+      <!-- Pandamart Banner -->
+      <div class="bg-emerald-900 text-white p-8 rounded-3xl flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="space-y-2">
+          <span class="bg-emerald-500 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full text-black">15 Minute Delivery</span>
+          <h2 class="text-3xl font-black">pandamart instant market</h2>
+          <p class="text-emerald-200 text-sm">Essentials, fresh dairy, drinks, and snacks straight to your doorstep.</p>
+        </div>
+        <label for="page-4" class="cursor-pointer bg-white text-emerald-900 px-5 py-2.5 rounded-xl font-bold hover:bg-emerald-100 transition whitespace-nowrap">
+          Use Grocery Voucher (Page 4) &rarr;
+        </label>
+      </div>
+
+      <!-- Grocery Shelves -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+        <div class="bg-white border rounded-2xl p-4 text-center hover:shadow-md transition">
+          <div class="text-5xl mb-2">🥛</div>
+          <h4 class="font-bold text-gray-900">Fresh Milk 1L</h4>
+          <p class="text-xs text-gray-500">Dairy & Eggs</p>
+          <span class="text-sm font-black text-panda block mt-2">Rs. 290</span>
+          <label for="cart-toggle" class="cursor-pointer mt-3 block w-full py-1.5 bg-panda text-white rounded-lg text-xs font-bold hover:bg-panda-dark transition">Add to Bag</label>
+        </div>
+
+        <div class="bg-white border rounded-2xl p-4 text-center hover:shadow-md transition">
+          <div class="text-5xl mb-2">🍞</div>
+          <h4 class="font-bold text-gray-900">Whole Wheat Bread</h4>
+          <p class="text-xs text-gray-500">Bakery Corner</p>
+          <span class="text-sm font-black text-panda block mt-2">Rs. 180</span>
+          <label for="cart-toggle" class="cursor-pointer mt-3 block w-full py-1.5 bg-panda text-white rounded-lg text-xs font-bold hover:bg-panda-dark transition">Add to Bag</label>
+        </div>
+
+        <div class="bg-white border rounded-2xl p-4 text-center hover:shadow-md transition">
+          <div class="text-5xl mb-2">🍎</div>
+          <h4 class="font-bold text-gray-900">Red Gala Apples</h4>
+          <p class="text-xs text-gray-500">Fresh Produce (1kg)</p>
+          <span class="text-sm font-black text-panda block mt-2">Rs. 380</span>
+          <label for="cart-toggle" class="cursor-pointer mt-3 block w-full py-1.5 bg-panda text-white rounded-lg text-xs font-bold hover:bg-panda-dark transition">Add to Bag</label>
+        </div>
+
+        <div class="bg-white border rounded-2xl p-4 text-center hover:shadow-md transition">
+          <div class="text-5xl mb-2">🍫</div>
+          <h4 class="font-bold text-gray-900">Dark Cocoa Bar</h4>
+          <p class="text-xs text-gray-500">Confectionery</p>
+          <span class="text-sm font-black text-panda block mt-2">Rs. 240</span>
+          <label for="cart-toggle" class="cursor-pointer mt-3 block w-full py-1.5 bg-panda text-white rounded-lg text-xs font-bold hover:bg-panda-dark transition">Add to Bag</label>
+        </div>
+      </div>
+    </section>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         LAYER 2 (BROWSE): PAGE 3 - RESTAURANT LISTINGS
+         +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <section id="page-view-3" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      
+      <!-- Layer Pathway Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs font-medium text-gray-500">
+        <label for="page-1" class="cursor-pointer hover:text-panda">Layer 1: Home</label>
+        <span>&rsaquo;</span>
+        <span class="text-panda font-bold">Layer 2: Restaurant Listings (Page 3)</span>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 class="text-3xl font-black text-gray-900">Popular Restaurants Near You</h2>
+          <p class="text-sm text-gray-500">Click on any restaurant card to enter Layer 3 (Full Menu & Ordering).</p>
+        </div>
+        <label for="page-4" class="cursor-pointer text-xs font-bold bg-pink-50 text-panda border border-pink-200 px-4 py-2 rounded-xl hover:bg-panda hover:text-white transition">
+          Check Today's Vouchers (Page 4) &rarr;
+        </label>
+      </div>
+
+      <!-- Restaurant Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- RESTAURANT CARD 1 -> CLICKS DIRECTLY INTO LAYER 3 (PAGE 5) -->
+        <label for="page-5" class="cursor-pointer group bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-panda transition">
+          <div class="h-44 bg-gradient-to-tr from-amber-600 to-yellow-500 relative flex items-center justify-center text-6xl">
+            🍔
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-gray-900 text-xs font-bold px-2 py-1 rounded-md shadow">
+              20-30 min
+            </span>
+          </div>
+          <div class="p-5 space-y-2">
+            <div class="flex justify-between items-center">
+              <h3 class="font-extrabold text-lg text-gray-900 group-hover:text-panda">The Smash Burger Lab</h3>
+              <span class="bg-green-100 text-green-800 text-xs font-black px-2 py-0.5 rounded">★ 4.8</span>
+            </div>
+            <p class="text-xs text-gray-500">Burgers • American • Fast Food • Free Delivery</p>
+            <div class="pt-2 flex justify-between items-center border-t border-gray-100">
+              <span class="text-xs font-bold text-panda">Rs. 0 Delivery Fee</span>
+              <span class="text-xs font-extrabold text-panda group-hover:underline">Open Menu (Layer 3) &rarr;</span>
+            </div>
+          </div>
+        </label>
+
+        <!-- RESTAURANT CARD 2 -> CLICKS DIRECTLY INTO LAYER 3 (PAGE 5) -->
+        <label for="page-5" class="cursor-pointer group bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-panda transition">
+          <div class="h-44 bg-gradient-to-tr from-red-600 to-rose-400 relative flex items-center justify-center text-6xl">
+            🍕
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-gray-900 text-xs font-bold px-2 py-1 rounded-md shadow">
+              25-35 min
+            </span>
+          </div>
+          <div class="p-5 space-y-2">
+            <div class="flex justify-between items-center">
+              <h3 class="font-extrabold text-lg text-gray-900 group-hover:text-panda">Napoli Woodfire Pizza</h3>
+              <span class="bg-green-100 text-green-800 text-xs font-black px-2 py-0.5 rounded">★ 4.7</span>
+            </div>
+            <p class="text-xs text-gray-500">Italian • Thin Crust • Pasta • Wood Fired</p>
+            <div class="pt-2 flex justify-between items-center border-t border-gray-100">
+              <span class="text-xs font-bold text-gray-600">Rs. 99 Delivery</span>
+              <span class="text-xs font-extrabold text-panda group-hover:underline">Open Menu (Layer 3) &rarr;</span>
+            </div>
+          </div>
+        </label>
+
+        <!-- RESTAURANT CARD 3 -> CLICKS DIRECTLY INTO LAYER 3 (PAGE 5) -->
+        <label for="page-5" class="cursor-pointer group bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-panda transition">
+          <div class="h-44 bg-gradient-to-tr from-orange-600 to-amber-500 relative flex items-center justify-center text-6xl">
+            🍚
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-gray-900 text-xs font-bold px-2 py-1 rounded-md shadow">
+              15-25 min
+            </span>
+          </div>
+          <div class="p-5 space-y-2">
+            <div class="flex justify-between items-center">
+              <h3 class="font-extrabold text-lg text-gray-900 group-hover:text-panda">Royal Dum Biryani</h3>
+              <span class="bg-green-100 text-green-800 text-xs font-black px-2 py-0.5 rounded">★ 4.9</span>
+            </div>
+            <p class="text-xs text-gray-500">Desi • Mughlai • Spicy Rice • Raita</p>
+            <div class="pt-2 flex justify-between items-center border-t border-gray-100">
+              <span class="text-xs font-bold text-panda">Rs. 0 Delivery Fee</span>
+              <span class="text-xs font-extrabold text-panda group-hover:underline">Open Menu (Layer 3) &rarr;</span>
+            </div>
+          </div>
+        </label>
+      </div>
+    </section>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         LAYER 2 (BROWSE): PAGE 4 - DEALS & VOUCHERS HUB
+         +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <section id="page-view-4" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      
+      <!-- Layer Pathway Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs font-medium text-gray-500">
+        <label for="page-1" class="cursor-pointer hover:text-panda">Layer 1: Home</label>
+        <span>&rsaquo;</span>
+        <span class="text-panda font-bold">Layer 2: Deals & Vouchers Hub (Page 4)</span>
+      </div>
+
+      <div>
+        <h2 class="text-3xl font-black text-gray-900">Active Promo Codes & Flash Deals</h2>
+        <p class="text-sm text-gray-500">Choose a promo code and redeem it on Layer 3 at checkout.</p>
+      </div>
+
+      <!-- Coupons Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="bg-white border-2 border-dashed border-panda rounded-2xl p-6 relative shadow-sm">
+          <span class="bg-panda text-white text-xs font-bold px-2 py-0.5 rounded-full absolute top-4 right-4">50% OFF</span>
+          <h3 class="text-xl font-black text-panda">PANDA50</h3>
+          <p class="text-xs text-gray-600 mt-2">Get 50% discount up to Rs. 400 on your first burger order.</p>
+          <label for="page-5" class="mt-6 block text-center cursor-pointer bg-panda text-white text-xs font-bold py-2 rounded-xl hover:bg-panda-dark transition">
+            Use on Burger Lab (Layer 3) &rarr;
+          </label>
+        </div>
+
+        <div class="bg-white border-2 border-dashed border-gray-300 rounded-2xl p-6 relative shadow-sm">
+          <span class="bg-gray-800 text-white text-xs font-bold px-2 py-0.5 rounded-full absolute top-4 right-4">FREE DEL</span>
+          <h3 class="text-xl font-black text-gray-800">FREEDEL</h3>
+          <p class="text-xs text-gray-600 mt-2">Zero delivery charges on all pizza orders above Rs. 1,200.</p>
+          <label for="page-5" class="mt-6 block text-center cursor-pointer bg-gray-900 text-white text-xs font-bold py-2 rounded-xl hover:bg-black transition">
+            Apply to Restaurant (Layer 3) &rarr;
+          </label>
+        </div>
+
+        <div class="bg-white border-2 border-dashed border-emerald-500 rounded-2xl p-6 relative shadow-sm">
+          <span class="bg-emerald-600 text-white text-xs font-bold px-2 py-0.5 rounded-full absolute top-4 right-4">PANDAMART</span>
+          <h3 class="text-xl font-black text-emerald-600">MART200</h3>
+          <p class="text-xs text-gray-600 mt-2">Rs. 200 flat cash off on all daily grocery baskets above Rs. 1,000.</p>
+          <label for="page-2" class="mt-6 block text-center cursor-pointer bg-emerald-600 text-white text-xs font-bold py-2 rounded-xl hover:bg-emerald-700 transition">
+            Shop Pandamart (Page 2) &rarr;
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         LAYER 3 (ACTION): PAGE 5 - RESTAURANT MENU & LIVE ORDER TRACKING
+         +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <section id="page-view-5" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      
+      <!-- Layer Pathway Breadcrumb (Full 3-Layer Visual Hierarchy) -->
+      <div class="flex items-center gap-2 text-xs font-medium text-gray-500">
+        <label for="page-1" class="cursor-pointer hover:text-panda">Layer 1: Home</label>
+        <span>&rsaquo;</span>
+        <label for="page-3" class="cursor-pointer hover:text-panda">Layer 2: Restaurant Listings</label>
+        <span>&rsaquo;</span>
+        <span class="text-panda font-bold">Layer 3: Menu & Fulfillment (Page 5)</span>
+      </div>
+
+      <!-- Restaurant Header Box -->
+      <div class="bg-white border rounded-3xl p-6 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <div class="flex items-center gap-3">
+            <h1 class="text-3xl font-black text-gray-900">The Smash Burger Lab</h1>
+            <span class="bg-green-100 text-green-800 text-xs font-black px-2.5 py-1 rounded-full">★ 4.8 (500+ reviews)</span>
+          </div>
+          <p class="text-sm text-gray-500 mt-1">Artisan Potato Buns • Angus Beef • Crispy Fries</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <label for="cart-toggle" class="cursor-pointer bg-panda text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow hover:bg-panda-dark transition">
+            View My Cart (Rs. 1,650)
+          </label>
+        </div>
+      </div>
+
+      <!-- Live GPS Order Status Bar (Layer 3 Fulfillment Feature) -->
+      <div class="bg-panda-soft border border-pink-200 rounded-2xl p-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-xs font-black text-panda uppercase tracking-wide">Live Order Tracking Simulator</span>
+          <span class="text-xs font-bold text-gray-600">Estimated Arrival: 18 Mins</span>
+        </div>
+        <div class="w-full bg-pink-200 h-2.5 rounded-full overflow-hidden">
+          <div class="bg-panda h-full rounded-full w-2/3"></div>
+        </div>
+        <div class="flex justify-between text-[11px] font-bold text-gray-500 mt-2">
+          <span class="text-panda">✓ Order Confirmed</span>
+          <span class="text-panda">✓ In Kitchen Cooking</span>
+          <span class="text-panda font-black">🚴 Rider on the way</span>
+          <span class="text-gray-400">Delivered</span>
+        </div>
+      </div>
+
+      <!-- Food Menu Catalog -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-black text-gray-900">Bestselling Smash Burgers</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Dish Item 1 -->
+          <div class="bg-white border rounded-2xl p-4 flex justify-between gap-4 hover:border-panda transition">
+            <div class="space-y-1">
+              <h4 class="font-bold text-gray-900">Double Truffle Smash</h4>
+              <p class="text-xs text-gray-500">Twin Angus patties, truffle mayo, caramelized onions, melted cheddar.</p>
+              <div class="text-sm font-black text-panda pt-2">Rs. 950</div>
+            </div>
+            <div class="flex flex-col items-center justify-between">
+              <div class="text-4xl">🍔</div>
+              <label for="cart-toggle" class="cursor-pointer text-xs font-bold px-3 py-1.5 bg-panda text-white rounded-lg hover:bg-panda-dark transition">
+                + Add
+              </label>
+            </div>
+          </div>
+
+          <!-- Dish Item 2 -->
+          <div class="bg-white border rounded-2xl p-4 flex justify-between gap-4 hover:border-panda transition">
+            <div class="space-y-1">
+              <h4 class="font-bold text-gray-900">Spicy Ghost Pepper Crunch</h4>
+              <p class="text-xs text-gray-500">Smoked chipotle glaze, ghost chili aioli, jalapeños, crispy beef bacon.</p>
+              <div class="text-sm font-black text-panda pt-2">Rs. 890</div>
+            </div>
+            <div class="flex flex-col items-center justify-between">
+              <div class="text-4xl">🔥</div>
+              <label for="cart-toggle" class="cursor-pointer text-xs font-bold px-3 py-1.5 bg-panda text-white rounded-lg hover:bg-panda-dark transition">
+                + Add
+              </label>
+            </div>
+          </div>
+
+          <!-- Dish Item 3 -->
+          <div class="bg-white border rounded-2xl p-4 flex justify-between gap-4 hover:border-panda transition">
+            <div class="space-y-1">
+              <h4 class="font-bold text-gray-900">Curly Seasoned Fries</h4>
+              <p class="text-xs text-gray-500">Golden spirals dusted in garlic paprika seasoning with garlic mayo dip.</p>
+              <div class="text-sm font-black text-panda pt-2">Rs. 350</div>
+            </div>
+            <div class="flex flex-col items-center justify-between">
+              <div class="text-4xl">🍟</div>
+              <label for="cart-toggle" class="cursor-pointer text-xs font-bold px-3 py-1.5 bg-panda text-white rounded-lg hover:bg-panda-dark transition">
+                + Add
+              </label>
+            </div>
+          </div>
+
+          <!-- Dish Item 4 -->
+          <div class="bg-white border rounded-2xl p-4 flex justify-between gap-4 hover:border-panda transition">
+            <div class="space-y-1">
+              <h4 class="font-bold text-gray-900">Classic Cold Coke 330ml</h4>
+              <p class="text-xs text-gray-500">Chilled tin pack delivered with cup of crushed ice.</p>
+              <div class="text-sm font-black text-panda pt-2">Rs. 150</div>
+            </div>
+            <div class="flex flex-col items-center justify-between">
+              <div class="text-4xl">🥤</div>
+              <label for="cart-toggle" class="cursor-pointer text-xs font-bold px-3 py-1.5 bg-panda text-white rounded-lg hover:bg-panda-dark transition">
+                + Add
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =======================================================================
+       PURE CSS SLIDE-OUT CART MODAL / DRAWER (LAYER 3 ACTION)
+       ======================================================================= -->
+  <div id="cart-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden justify-end">
+    
+    <!-- Transparent backdrop clickable area to close -->
+    <label for="cart-toggle" class="flex-1 cursor-pointer"></label>
+
+    <div class="w-full max-w-md bg-white h-full shadow-2xl p-6 flex flex-col justify-between cart-drawer-anim">
+      <div>
+        <div class="flex justify-between items-center pb-4 border-b">
+          <h3 class="text-xl font-black text-gray-900">Your Basket</h3>
+          <label for="cart-toggle" class="cursor-pointer text-gray-400 hover:text-gray-800 text-2xl font-bold">&times;</label>
+        </div>
+
+        <!-- Cart Items -->
+        <div class="divide-y divide-gray-100 my-4 space-y-3">
+          <div class="flex justify-between items-center pt-2">
+            <div>
+              <p class="font-bold text-sm text-gray-900">1x Double Truffle Smash</p>
+              <p class="text-xs text-gray-500">Special note: Extra sauce</p>
+            </div>
+            <span class="text-sm font-bold text-panda">Rs. 950</span>
+          </div>
+
+          <div class="flex justify-between items-center pt-2">
+            <div>
+              <p class="font-bold text-sm text-gray-900">2x Curly Seasoned Fries</p>
+              <p class="text-xs text-gray-500">With garlic mayo dip</p>
+            </div>
+            <span class="text-sm font-bold text-panda">Rs. 700</span>
+          </div>
+        </div>
+
+        <!-- Voucher Applied -->
+        <div class="bg-pink-50 border border-pink-200 rounded-xl p-3 flex justify-between items-center text-xs">
+          <div>
+            <span class="font-bold text-panda">Voucher Applied:</span>
+            <span class="text-gray-700"> PANDA50 (-Rs. 400)</span>
+          </div>
+          <span class="text-green-600 font-bold">ACTIVE</span>
+        </div>
+      </div>
+
+      <!-- Checkout Summary -->
+      <div class="space-y-3 border-t pt-4">
+        <div class="flex justify-between text-xs text-gray-500">
+          <span>Subtotal</span>
+          <span>Rs. 1,650</span>
+        </div>
+        <div class="flex justify-between text-xs text-gray-500">
+          <span>Delivery Fee</span>
+          <span class="text-panda font-bold">FREE</span>
+        </div>
+        <div class="flex justify-between text-xs text-green-600 font-bold">
+          <span>Promo Discount</span>
+          <span>- Rs. 400</span>
+        </div>
+        <div class="flex justify-between text-base font-black text-gray-900 pt-2 border-t">
+          <span>Total</span>
+          <span class="text-panda">Rs. 1,250</span>
+        </div>
+
+        <label for="cart-toggle" class="cursor-pointer block text-center w-full py-3.5 bg-panda text-white rounded-xl font-black hover:bg-panda-dark transition shadow-lg mt-4">
+          Place Order & Checkout
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       FOOTER
+       ======================================================================= -->
+  <footer class="bg-white border-t border-gray-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+      <div class="flex items-center gap-2">
+        <span class="text-panda font-bold text-base">🐼 foodpanda clone</span>
+        <span>• 100% Pure HTML & CSS Architecture</span>
+      </div>
+      <div class="flex gap-4 font-semibold">
+        <label for="page-1" class="cursor-pointer hover:text-panda">Page 1: Home</label>
+        <label for="page-2" class="cursor-pointer hover:text-panda">Page 2: Mart</label>
+        <label for="page-3" class="cursor-pointer hover:text-panda">Page 3: Restaurants</label>
+        <label for="page-4" class="cursor-pointer hover:text-panda">Page 4: Deals</label>
+        <label for="page-5" class="cursor-pointer hover:text-panda">Page 5: Order Menu</label>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
